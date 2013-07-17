@@ -30,6 +30,13 @@
             android:enabled="true"
             android:label="PingServiceLabel" >
         </service>
+
+        <activity
+            android:name="ResultActivity"
+            android:excludeFromRecents="true"
+            android:label="Take Action"
+            android:launchMode="singleTask"
+            android:taskAffinity="" />
     </application>
 
 </manifest>

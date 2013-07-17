@@ -16,9 +16,6 @@ public class PingService extends IntentService {
     NotificationCompat.Builder builder;
 
     public PingService() {
-
-        // The super call is required. The background thread that IntentService
-        // starts is labeled with the string argument you pass.
         super("mx.androidtitlan.simplenotification");
     }
 

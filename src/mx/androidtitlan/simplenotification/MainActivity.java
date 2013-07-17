@@ -25,10 +25,8 @@ public class MainActivity extends Activity {
 
 	public void createNotification(View v) {
 		int seconds;
-
 		// Gets the reminder text the user entered.
-		String message = "This is aaawesome!";
-
+		String message = "This is my text for notification";
 		mServiceIntent.putExtra(CommonConstants.EXTRA_MESSAGE, message);
 		mServiceIntent.setAction(CommonConstants.ACTION_PING);
 		Toast.makeText(this, R.string.timer_start, Toast.LENGTH_SHORT).show();
@@ -56,5 +54,3 @@ public class MainActivity extends Activity {
 		return true;
 	}
 }
-
-// }
