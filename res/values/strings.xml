@@ -34,7 +34,7 @@
 
     <string name="ping_text">Set Seconds Until Ping</string>
     <string name="done_snoozing">Done Snoozing.</string>
-    <string name="seconds_default">10</string>
+    <string name="seconds_default">2</string>
     <string name="reminder_label">Reminder Text</string>
     <string name="reminder_text">Don\'t forget!</string>
 

@@ -13,20 +13,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/ping_text" />
 
-    <EditText
-        android:id="@+id/edit_seconds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/seconds_view"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:text="@string/seconds_default"
-        android:inputType="numberSigned">
-
-        <requestFocus />
-    </EditText>
-
     <TextView
         android:id="@+id/reminder_view"
         android:layout_width="wrap_content"
@@ -59,5 +45,16 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:onClick="createNotification"
         android:text="@string/ping" />
+
+    <EditText
+        android:id="@+id/edit_seconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seconds_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:text="@string/seconds_default" />
 
 </RelativeLayout>

@@ -21,11 +21,13 @@ public class ResultActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), PingService.class);
         intent.setAction(CommonConstants.ACTION_SNOOZE);
         startService(intent);
+        finish();
     }
 
     public void onDismissClick(View v) {
         Intent intent = new Intent(getApplicationContext(), PingService.class);
         intent.setAction(CommonConstants.ACTION_DISMISS);
         startService(intent);
+        finish();
     }
 }
