@@ -26,9 +26,9 @@
         </activity>
 
         <service
-            android:name="PingService"
+            android:name="NotificationService"
             android:enabled="true"
-            android:label="PingServiceLabel" >
+            android:label="NotificationServicelabel" >
         </service>
 
         <activity

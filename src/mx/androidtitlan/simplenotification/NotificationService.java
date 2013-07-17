@@ -10,14 +10,14 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-public class PingService extends IntentService {
+public class NotificationService extends IntentService {
 
 	private NotificationManager mNotificationManager;
 	private String mMessage;
 	private int mMillis;
 	NotificationCompat.Builder builder;
 
-	public PingService() {
+	public NotificationService() {
 		super("mx.androidtitlan.simplenotification");
 	}
 
@@ -44,18 +44,16 @@ public class PingService extends IntentService {
 
 		// Sets up the Snooze and Dismiss action buttons that will appear in the
 		// expanded view of the notification.
-		Intent dismissIntent = new Intent(this, PingService.class);
+		Intent dismissIntent = new Intent(this, NotificationService.class);
 		dismissIntent.setAction(CommonConstants.ACTION_DISMISS);
 		PendingIntent piDismiss = PendingIntent.getService(this, 0,
 				dismissIntent, 0);
 
-		Intent snoozeIntent = new Intent(this, PingService.class);
+		Intent snoozeIntent = new Intent(this, NotificationService.class);
 		snoozeIntent.setAction(CommonConstants.ACTION_SNOOZE);
 		PendingIntent piSnooze = PendingIntent.getService(this, 0,
 				snoozeIntent, 0);
 
-		// Constructs the Builder object.
-		
 		builder = new NotificationCompat.Builder(this)
 				.setSmallIcon(R.drawable.ic_stat_notification)
 				.setContentTitle(getString(R.string.notification))
@@ -63,26 +61,19 @@ public class PingService extends IntentService {
 				.setDefaults(Notification.DEFAULT_VIBRATE)
 				.setPriority(2)
 				.setLights(Color.BLUE, 5000, 5000)
-				.setSound(Uri.parse("file:///sdcard/Notifications/hey_listen.mp3"))
+				.setSound(
+						Uri.parse("file:///sdcard/Notifications/hey_listen.mp3"))
 				.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
 				.addAction(R.drawable.ic_stat_dismiss,
 						getString(R.string.dismiss), piDismiss)
 				.addAction(R.drawable.ic_stat_snooze,
 						getString(R.string.snooze), piSnooze);
 
-		/*
-		 * Clicking the notification itself displays ResultActivity, which
-		 * provides UI for snoozing or dismissing the notification. This is
-		 * available through either the normal view or big view.
-		 */
 		Intent resultIntent = new Intent(this, ResultActivity.class);
 		resultIntent.putExtra(CommonConstants.EXTRA_MESSAGE, msg);
 		resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
 				| Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-		// Because clicking the notification opens a new ("special") activity,
-		// there's
-		// no need to create an artificial back stack.
 		PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
 				resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -90,15 +81,12 @@ public class PingService extends IntentService {
 		startTimer(mMillis);
 	}
 
-	private void issueNotification(NotificationCompat.Builder builder) {
+	private void createNotification(NotificationCompat.Builder builder) {
 		mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		// Including the notification ID allows you to update the notification
-		// later on.
 		mNotificationManager.notify(CommonConstants.NOTIFICATION_ID,
 				builder.build());
 	}
 
-	// Starts the timer according to the number of seconds the user specified.
 	private void startTimer(int millis) {
 		Log.d(CommonConstants.DEBUG_TAG, getString(R.string.timer_start));
 		try {
@@ -108,6 +96,6 @@ public class PingService extends IntentService {
 			Log.d(CommonConstants.DEBUG_TAG, getString(R.string.sleep_error));
 		}
 		Log.d(CommonConstants.DEBUG_TAG, getString(R.string.timer_finished));
-		issueNotification(builder);
+		createNotification(builder);
 	}
 }

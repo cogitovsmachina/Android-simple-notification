@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mServiceIntent = new Intent(getApplicationContext(), PingService.class);
+		mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
 	}
 
 	public void createNotification(View v) {

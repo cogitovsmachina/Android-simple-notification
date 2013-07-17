@@ -18,14 +18,14 @@ public class ResultActivity extends Activity {
     }
 
     public void onSnoozeClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), PingService.class);
+        Intent intent = new Intent(getApplicationContext(), NotificationService.class);
         intent.setAction(CommonConstants.ACTION_SNOOZE);
         startService(intent);
         finish();
     }
 
     public void onDismissClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), PingService.class);
+        Intent intent = new Intent(getApplicationContext(), NotificationService.class);
         intent.setAction(CommonConstants.ACTION_DISMISS);
         startService(intent);
         finish();
