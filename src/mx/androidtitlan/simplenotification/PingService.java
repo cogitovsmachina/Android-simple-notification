@@ -5,6 +5,8 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -24,21 +26,20 @@ public class PingService extends IntentService {
 		mMessage = intent.getStringExtra(CommonConstants.EXTRA_MESSAGE);
 		mMillis = intent.getIntExtra(CommonConstants.EXTRA_TIMER,
 				CommonConstants.DEFAULT_TIMER_DURATION);
-		NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		String action = intent.getAction();
-		if (action.equals(CommonConstants.ACTION_PING)) {
-			issueNotification(intent, mMessage);
+		if (action.equals(CommonConstants.ACTION_NOTIFY)) {
+			createNotification(intent, mMessage);
 		} else if (action.equals(CommonConstants.ACTION_SNOOZE)) {
-			nm.cancel(CommonConstants.NOTIFICATION_ID);
+			mNotificationManager.cancel(CommonConstants.NOTIFICATION_ID);
 			Log.d(CommonConstants.DEBUG_TAG, getString(R.string.snoozing));
-			issueNotification(intent, getString(R.string.done_snoozing));
-
+			createNotification(intent, getString(R.string.done_snoozing));
 		} else if (action.equals(CommonConstants.ACTION_DISMISS)) {
-			nm.cancel(CommonConstants.NOTIFICATION_ID);
+			mNotificationManager.cancel(CommonConstants.NOTIFICATION_ID);
 		}
 	}
 
-	private void issueNotification(Intent intent, String msg) {
+	private void createNotification(Intent intent, String msg) {
 		mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
 		// Sets up the Snooze and Dismiss action buttons that will appear in the
@@ -54,18 +55,15 @@ public class PingService extends IntentService {
 				snoozeIntent, 0);
 
 		// Constructs the Builder object.
+		
 		builder = new NotificationCompat.Builder(this)
 				.setSmallIcon(R.drawable.ic_stat_notification)
 				.setContentTitle(getString(R.string.notification))
 				.setContentText(getString(R.string.ping))
-				.setDefaults(Notification.DEFAULT_ALL)
-				// requires VIBRATE permission
-				/*
-				 * Sets the big view "big text" style and supplies the text (the
-				 * user's reminder message) that will be displayed in the detail
-				 * area of the expanded notification. These calls are ignored by
-				 * the support library for pre-4.1 devices.
-				 */
+				.setDefaults(Notification.DEFAULT_VIBRATE)
+				.setPriority(2)
+				.setLights(Color.BLUE, 5000, 5000)
+				.setSound(Uri.parse("file:///sdcard/Notifications/hey_listen.mp3"))
 				.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
 				.addAction(R.drawable.ic_stat_dismiss,
 						getString(R.string.dismiss), piDismiss)
